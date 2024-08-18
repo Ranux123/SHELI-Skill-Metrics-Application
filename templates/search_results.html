@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/search_results.css">
+    <title>Search Results</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      body {
+        cursor: none;
+        min-height: 100vh;
+        background: linear-gradient(#111,#222,#111);
+      }
+
+      .cursor-dot {
+        width: 5px;
+        height: 5px;
+        background-color: #fff;
+    }
+    
+      .cursor-outline {
+          width: 30px;
+          height: 30px;
+          border: 2px solid hsla(0, 0%, 100%, 0.801);
+      }
+
+      .cursor-dot,
+      .cursor-outline {
+          pointer-events: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          transform: translate(-50%, -50%);
+          border-radius: 50%;
+          z-index: 1;
+      }
+
+      header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      header .logo {
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 2em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding-left: 15px; 
+      }
+      
+      header ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      header ul li {
+        list-style: none;
+        margin-left: 20px;
+      }
+      
+      header ul li a {
+        text-decoration: none;
+        padding: 5px 12px;
+        color: #fff;
+        border-radius: 20px;
+        transition: 0.5s;
+      }
+      
+      header ul li a:hover,
+      header ul li a.active {
+        background: #fff;
+        color: #111;
+      }
+      
+      
+      .welcome {
+        position: relative;
+        top: 200px;
+        color: rgb(255, 255, 255);  
+        text-shadow: 0 0 5px rgb(255, 255, 255);
+        font-size: 40px;
+        left: 10%;
+        text-transform: uppercase;
+      }
+
+      .search-bar {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        top: 10%;
+        left: 28%;
+    }
+
+    .search-bar .search-form .input {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        width: 450px;
+        height: 40px;
+        background: rgba(45, 45, 45, 0.9);
+        border-radius: 10px;
+        border-color: transparent;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        padding: 15px;
+    }
+
+    .search-bar .search-form .input:focus::placeholder {
+        color: #fff;
+    }
+
+    .search-bar .search-form .submit {
+        position: relative;
+        cursor: pointer;
+        background: rgba(255,255,255,0.1);
+        border-color: transparent transparent transparent;
+        border-radius: 10px;
+        color: #fff;
+        transition: background 0.3s;
+        font-weight: bold;
+        font-size: 1.1em;
+        padding: 5px 20px;
+        text-transform: uppercase;
+        border-style: none;
+    }
+
+    .search-bar .search-form .submit:hover {
+        background: rgb(255, 0, 140);
+        box-shadow : 0 0 15px rgb(255,0,140),
+        0 0 20px rgb(255, 0 ,140); 
+        color: #000;
+        font-weight: bold;
+    }
+
+    .back {
+        cursor: pointer;
+        background: rgba(255,255,255,0.1);
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        transition: background 0.2s;
+        font-weight: bold;
+        font-size: 1.1em;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-decoration: none;
+        position: relative;
+        left: 135px;
+    }
+
+    .back:hover {
+        letter-spacing: 1px;
+        background: rgb(255, 0, 140);
+        box-shadow : 0 0 15px rgb(255,0,140),
+        0 0 20px rgb(255, 0 ,140); 
+        color: #000;
+        font-weight: bold;
+    }
+</style>
+<body>
+    <header class="header">
+        <a href="{{url_for('home')}}" class="logo">SHELI🔮</a>
+        <ul>
+            <li><a href="{{url_for('home')}}" class="active">Home</a></li>
+            <li><a href="{{url_for('skills')}}">Skills</a></li>
+            <li><a href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+    </header>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+    <h1 class="welcome">Username&nbsp;&nbsp;:&nbsp;&nbsp;{{ username }}</h1>
+    <div class="progress-container">
+        {% for skill in skills %}
+            <div class="skill">
+                <div class="skill-title">{{ skill[2] }}</div>
+                <div class="skill-bar"></div>
+                <div class="progress-bar progress-bar-loading" style="width: {{ skill[3] }}%">{{ skill[3] }}%</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="search-bar">
+        <form action="/search" method="post" class="search-form">
+            <input type="text" name="username" class="input" placeholder="Search Username                                          🔎" autocomplete="off">
+            <button type="submit" class="submit">Search</button>
+        </form>
+    </div>
+    <a href="{{ url_for('home')}}" class="back">Back</a>
+<script>
+  const cursorDot  = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector("[data-cursor-outline]");
+
+        window.addEventListener("mousemove", function(e) {
+
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            //cursorOutline.style.left = `${posX}px`;
+            //cursorOutline.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 200, fill: "forwards"});
+
+        });
+</script>
+</body>
+</html>

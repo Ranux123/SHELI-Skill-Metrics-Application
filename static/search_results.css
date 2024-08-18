@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.progress-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 290px;
+  width: 80%;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.skill {
+  margin-right: 50px;
+  margin-bottom: 20px;
+}
+
+.skill-bar {
+  background-color: rgba(255,255,255,0.1); /* Change background color */
+  border-color: rgba(255,255,255,0.3);
+  color: #fff; /* Change text color */
+  height: 25px; /* Set the height of the progress bar */
+  line-height: 25px; /* Center the text vertically */
+  border-radius: 5px; /* Add rounded corners */
+  padding: 0 5px; /* Add padding */
+}
+
+.progress-bar {
+  position: relative;
+  top: -25px;
+  background-color: rgb(153, 0, 255);
+  box-shadow: 0 0 15px rgb(153, 0 , 255);
+  height: 25px;
+  line-height: 25px;
+  border-radius: 5px;
+  padding: 0 5px;
+  transition: width 1s;
+  color: #fff;
+  font-weight: bold;
+
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: -5px; /* Adjust the position as needed */
+  right: 0;
+  width: 5px; /* Adjust the size of the glitter */
+  height: 5px; /* Adjust the size of the glitter */
+  background: rgba(255, 255, 255); /* Glitter color */
+  border-radius: 50%; /* Make it circular */
+  animation: glitterAnimation 1s infinite; /* Apply glitter animation */
+}
+
+@keyframes glitterAnimation {
+  0% {
+      opacity: 0; /* Start with no opacity */
+  }
+  50% {
+      opacity: 1; /* Increase opacity */
+  }
+  100% {
+      opacity: 0; /* Fade out */
+  }
+}
+
+
+.progress-bar-loading {
+  animation: progress-loading 2s linear;
+}
+
+@keyframes progress-loading {
+  0% {
+      width: 0;
+  }
+  100% {
+      width: 100;
+  }
+}
+
+.skill-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.progress-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+}

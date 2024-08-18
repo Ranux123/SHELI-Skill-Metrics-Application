@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">   
+    <link rel="stylesheet" href="../static/home.css">
+    <title>Home</title>
+</head>
+<style>
+    body {
+        cursor: none;
+    }
+
+    .cursor-dot {
+        width: 5px;
+        height: 5px;
+        background-color: #fff;
+    }
+    
+    .cursor-outline {
+        width: 30px;
+        height: 30px;
+        border: 2px solid hsla(0, 0%, 100%, 0.801);
+    }
+
+    .cursor-dot,
+    .cursor-outline {
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .text {
+        text-transform: uppercase;
+        position: absolute;
+        top: 40%;
+        color: rgba(153, 0, 240);  
+        text-shadow: 0 0 5px rgb(153, 0, 240);
+        font-size: 60px;
+    }
+
+    .description .title {
+        font-size: 70px;
+        text-align: center;
+        margin-top: 
+    }
+
+    .description {
+        position: absolute;
+        top: 70%;
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .description p {
+        color: #fff;
+        font-family: 'Quicksand', sans-serif;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 30px;
+        text-align:start;
+        padding-left: 25px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .description p a {
+        text-decoration: none;
+        color: rgb(253, 0, 140);
+        font-size: 50px;
+        text-shadow: 0 0 5px rgb(253, 0, 140);
+    }
+
+    .search-bar {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        top: 15%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search-bar .search-form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .search-bar .search-form .input {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        width: 450px;
+        height: 40px;
+        background: rgba(45, 45, 45, 0.9);
+        border-radius: 10px;
+        border-color: transparent;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        padding: 15px;
+        flex: 1;
+    }
+
+    .search-bar .search-form .input:focus::placeholder {
+        color: #fff;
+    }
+
+    .search-bar .search-form .submit {
+        position: relative;
+        cursor: pointer;
+        background: rgba(255,255,255,0.1);
+        border-color: transparent transparent transparent;
+        border-radius: 10px;
+        color: #fff;
+        transition: background 0.3s;
+        font-weight: bold;
+        font-size: 1.1em;
+        padding: 5px 20px;
+        text-transform: uppercase;
+        border-style: none;
+        margin-left: 10px;
+    }
+
+    .search-bar .search-form .submit:hover {
+        background: rgb(255, 0, 140);
+        box-shadow : 0 0 15px rgb(255,0,140),
+        0 0 20px rgb(255, 0 ,140); 
+        color: #000;
+        font-weight: bold;
+    }
+
+    .alert {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: transparent; /* Change the background color as needed */
+        color: #ffffff; /* Change the text color as needed */
+        border:2px solid rgb(255, 0, 0);
+        box-shadow: 0 0 5px rgb(255, 0, 0);
+        border-radius: 10px;
+        padding: 8px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        z-index: 9999; /* Ensure the alert appears above other content */
+        width: 40%; /* Make the alert span the full width */
+        text-align: center; /* Center the text horizontally */
+        margin-top: 10px;
+    }
+    
+    @media only screen and (max-width: 768px) {
+        .description {
+          top: 60%;
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .description p {
+          margin-top: 10px;
+        }
+      
+        .text {
+          font-size: 40px;
+        }
+      
+        .search-bar {
+          top: 40%;
+          width: 300px;
+        }
+      }
+      
+      @media only screen and (max-width: 480px) {
+        .description {
+          top: 50%;
+        }
+      
+        .text {
+          font-size: 30px;
+        }
+      
+        .search-bar {
+          top: 30%;
+          width: 200px;
+        }
+      }
+      
+</style>
+<body>
+    <header class="header">
+        <a href="{{url_for('home')}}" class="logo">SHELI🔮</a>
+        <ul>
+            <li><a href="{{url_for('home')}}" class="active">Home</a></li>
+            <li><a href="{{url_for('skills')}}">Skills</a></li>
+            <li><a href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+    </header> 
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+            <p class="alert">{{ message }}</p>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <h1 class="text">Welcome&nbsp;&nbsp;{{ session['username'] }}!</h1>
+    <div class="description">
+        <p><a href="{{url_for('home')}}">S</a>killful</p>
+        <p><a href="{{url_for('home')}}">H</a>oning</p>
+        <p><a href="{{url_for('home')}}">E</a>fficiency</p>
+        <p><a href="{{url_for('home')}}">L</a>earning</p>
+        <p><a href="{{url_for('home')}}">I</a>nsight</p>
+    </div>
+    <div class="search-bar">
+        <form action="/search" method="post" class="search-form">
+            <input type="text" name="username" class="input" placeholder="Search Username                                          🔎" autocomplete="off">
+            <button type="submit" class="submit">Search</button>
+        </form>
+    </div>
+
+<script>
+    const cursorDot  = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector("[data-cursor-outline]");
+
+        window.addEventListener("mousemove", function(e) {
+
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            //cursorOutline.style.left = `${posX}px`;
+            //cursorOutline.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 200, fill: "forwards"});
+
+        });
+</script>
+</body>
+</html>
